@@ -7,10 +7,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .menu {
             background-color: #333;
             overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
         }
         .menu a {
             float: left;
@@ -25,8 +30,8 @@
             color: black;
         }
         .section {
-            padding: 20px;
-            margin-top: 10px;
+            padding: 60px 20px; /* Aggiungi padding superiore per evitare che il contenuto sia nascosto sotto il menu fisso */
+            margin-top: 40px;
         }
     </style>
 </head>
