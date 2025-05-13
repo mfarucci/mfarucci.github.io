@@ -1,85 +1,331 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Massimiliano Farucci's Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .menu {
-            background-color: #333;
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            top: 0;
-        }
-        .menu a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        .menu a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .section {
-            padding: 60px 20px; /* Aggiungi padding superiore per evitare che il contenuto sia nascosto sotto il menu fisso */
-            margin-top: 40px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Online di Massimiliano Farucci</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React via CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel per JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Font Awesome per le icone (alternativa a Lucide) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen py-8">
+  <div id="root" class="container mx-auto"></div>
 
-<div class="menu">
-    <a href="#home">Home</a>
-    <a href="#services">What I Do</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-</div>
+  <script type="text/babel">
+    // Componente principale Resume
+    function Resume() {
+      const [expandedSections, setExpandedSections] = React.useState({
+        profile: true,
+        skills: true,
+        softSkills: true,
+        strengths: true,
+        experience: true,
+        education: true,
+        language: true
+      });
 
-<div id="home" class="section">
-    <h1>Home</h1>
-    <p>Welcome to Massimiliano Farucci's page.</p>
-</div>
-
-<div id="services" class="section">
-    <h1>What I Do</h1>
-    <p>AI</p>
-    <p>Agentic AI</p>
-</div>
-
-<div id="about" class="section">
-    <h1>About</h1>
-    <p>About</p>
-</div>
-
-<div id="contact" class="section">
-    <h1>Contact</h1>
-    <p>Contact</p>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuItems = document.querySelectorAll('.menu a');
-        menuItems.forEach(function(item) {
-            item.addEventListener('click', function(event) {
-                event.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                document.getElementById(targetId).scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            });
+      // Funzione per gestire il click su una sezione
+      const toggleSection = (section) => {
+        setExpandedSections({
+          ...expandedSections,
+          [section]: !expandedSections[section]
         });
-    });
-</script>
+      };
 
+      // Componente per le intestazioni collassabili
+      const CollapsibleHeader = ({ title, section }) => (
+        <div 
+          className="flex items-center cursor-pointer mb-2 bg-gray-100 p-2 rounded-md"
+          onClick={() => toggleSection(section)}
+        >
+          <i className={`fas ${expandedSections[section] ? 'fa-chevron-down' : 'fa-chevron-right'} mr-2 text-blue-600`}></i>
+          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+        </div>
+      );
+
+      return (
+        <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+          {/* Header */}
+          <div className="mb-6 text-center border-b pb-6">
+            <h1 className="text-3xl font-bold text-blue-700 mb-2">Massimiliano Farucci</h1>
+            <div className="flex justify-center items-center gap-4 mb-2">
+              <a 
+                href="https://www.linkedin.com/in/massimiliano-farucci-72b97651/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center text-gray-700"
+              >
+                <i className="fab fa-linkedin mr-1"></i> Profilo LinkedIn
+              </a>
+            </div>
+          </div>
+
+          {/* Profile & Objectives */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Profilo Professionale & Obiettivi" section="profile" />
+            {expandedSections.profile && (
+              <div className="pl-6 text-gray-700">
+                <p className="mb-4">
+                  Come Data Analyst, in continua formazione nel campo dell'Intelligenza Artificiale, 
+                  con oltre 28 anni di esperienza nella trasformazione di dati complessi e insights strategici, 
+                  aspiro al ruolo di Head of Data Scientist Team. Ho ottenuto varie certificazioni nel campo dell'AI, 
+                  Agentic AI e ho sviluppato competenze avanzate in Machine Learning, Predictive Modeling e Deep Learning, 
+                  applicandole con successo in contesti aziendali diversificati. Dotato di eccellenti capacità analitiche 
+                  e di problem solving tecnico e strategico, sono in grado di progettare e implementare soluzioni innovative 
+                  per ottimizzare i processi operativi e supportare decisioni basate sui dati. Appassionato di nuove tecnologie, 
+                  sono costantemente impegnato a migliorare le mie competenze attraverso una formazione continua.
+                </p>
+              </div>
+            )}
+          </div>
+          
+          {/* Main Skills */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Competenze Principali" section="skills" />
+            {expandedSections.skills && (
+              <div className="pl-6">
+                <p className="text-gray-700">
+                  Intelligenza Artificiale, AI GEN, Agentic AI, AI Voicebot, AI Chatbot, Analisi Dati, Data Science, 
+                  Machine Learning, Regressione Lineare, Bayesian ML, Statistica Inferenziale, Statistica Descrittiva, 
+                  Python, Scikit-learn, Microsoft Power BI & Data Visualization, Telecomunicazioni, OBIEE, System Administrator 
+                  (Microsoft Server), Troubleshooting, Assistenza Hardware e Software, Developer Junior (Python, JSON, 
+                  Microsoft SQL server, MySQL, HTML5/CSS3, JQUERY, JAVASCRIPT, AJAX).
+                </p>
+              </div>
+            )}
+          </div>
+          
+          {/* Soft Skills */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Soft Skills" section="softSkills" />
+            {expandedSections.softSkills && (
+              <div className="pl-6">
+                <p className="text-gray-700">
+                  Thought Leadership, Collaborazione e Lavoro di Squadra, Problem Solving, Problem Solving Collaborativo, 
+                  Pensiero Critico e Strategico, Capacità Analitiche, Miglioramento dei Processi Aziendali.
+                </p>
+              </div>
+            )}
+          </div>
+          
+          {/* Strengths */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Punti di Forza" section="strengths" />
+            {expandedSections.strengths && (
+              <div className="pl-6">
+                <p className="text-gray-700">
+                  Leadership, Resilienza, Lavoro di Squadra, Lavoro Collaborativo, Intuizione, 
+                  Capacità Analitiche, Lealtà Aziendale, Empatia, Trasparenza.
+                </p>
+              </div>
+            )}
+          </div>
+          
+          {/* Work Experience */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Esperienze Lavorative" section="experience" />
+            {expandedSections.experience && (
+              <div className="pl-6">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-blue-600">TIM Spa</h3>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">AI & Digital Cognitive Channels, Voicebot/ChatBot Data Analyst, Routing Strategies @ HQ</h4>
+                    <p className="text-sm text-gray-600 italic">Set 2018 - Presente, Roma, Italia - Remoto (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: Intelligenza Artificiale, AI Voicebot, AI Chatbot, Capacità Analitiche e Tecniche, 
+                      Analisi Dati, Data Science, Telecomunicazioni, Problem Solving, Problem Solving Collaborativo, 
+                      Data Visualization, Pensiero Critico.
+                    </p>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">IVR Design & Routing Strategies @ HQ</h4>
+                    <p className="text-sm text-gray-600 italic">Ago 2016 - Ago 2018, Roma, Italia - Remoto (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: Capacità Analitiche e Tecniche, Analisi Dati, Data Visualization, Data Science, 
+                      Telecomunicazioni, Miglioramento dei Processi Aziendali, Pensiero Critico.
+                    </p>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">Data Analysis & KPI - Data Visualization (Oracle BI EE & PowerBI) @ Planning & Monitoring</h4>
+                    <p className="text-sm text-gray-600 italic">Feb 2016 - Lug 2016, Napoli, Italia - In presenza (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: Capacità Analitiche e Tecniche, Microsoft Power BI, Analisi Dati, Data Science, 
+                      Data Visualization, Telecomunicazioni, OBIEE, Pensiero Critico, Pensiero Strategico.
+                    </p>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">Teacher training @ Model Development & EDUCATION</h4>
+                    <p className="text-sm text-gray-600 italic">Nov 2014 - Gen 2016, Napoli, Italia - In presenza (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: Formazione, Telecomunicazioni, Pensiero Critico, Pensiero Strategico, 
+                      Thought Leadership, Miglioramento dei Processi Aziendali.
+                    </p>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">System Administrator, Technical Problem Solving @ Operational Management</h4>
+                    <p className="text-sm text-gray-600 italic">Gen 2001 - Ott 2014, Napoli, Italia - In presenza (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: System Administrator (certificazione HR), Microsoft Server, Troubleshooting, 
+                      Assistenza Hardware e Software, Problem Solving Tecnico, Developer Junior (Microsoft SQL server, 
+                      HTML5/CSS3, JQUERY, JAVASCRIPT, AJAX), Capacità Analitiche, Analisi Dati, MySQL, WordPress, Telecomunicazioni.
+                    </p>
+                  </div>
+                  
+                  <div className="mb-3">
+                    <h4 className="font-medium">Customer Care & Direct Marketing @ TIM CC</h4>
+                    <p className="text-sm text-gray-600 italic">Set 1997 - Dic 2000, Napoli, Italia - In presenza (Tempo Pieno)</p>
+                    <p className="text-sm text-gray-700">
+                      Skills: Leadership, Marketing, Vendite, Customer Care, Collaborazione e Teamwork, 
+                      Capacità Analitiche, Miglioramento dei Processi Aziendali, Telecomunicazioni.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Education */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Studi & Certificazioni" section="education" />
+            {expandedSections.education && (
+              <div className="pl-6">
+                <p className="italic text-sm mb-4">
+                  *Tutte le certificazioni sono disponibili e verificabili sul mio profilo personale LinkedIn.
+                </p>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Certification Agentic AI and AI Agents: A Primer for Leaders</h4>
+                  <p className="text-sm text-gray-600">Vanderbilt University</p>
+                  <p className="text-sm text-gray-700">Gen 2025 | Voto: 100/100</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Agentic AI and AI Agents: A Primer for Leaders</span><br />
+                    Skills: Agentic AI, AgenticAI, AI Agents, GenAI Applications, Generative Artificial Intelligence, RAG, Prompt engineering.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Certification Launching into Machine Learning by Google</h4>
+                  <p className="text-sm text-gray-600">Google</p>
+                  <p className="text-sm text-gray-700">Dic 2024 - Gen 2025 | Voto: 96/100</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">AI, Machine Learning, Deep Learning e Neural Network on Google Cloud</span><br />
+                    Skills: Tensorflow, Bigquery, Neural Network, Linear Algebra, Gradient descent, Backpropagation.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Certification Agentic AI - Artificial Intelligence</h4>
+                  <p className="text-sm text-gray-600">Deeplearning.ai</p>
+                  <p className="text-sm text-gray-700">Dic 2024</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">AgenticAI: "Multi AI Agent Systems with crewAI"</span><br />
+                    Automate business workflows with multi-AI agent systems. Exceed the performance of prompting a single LLM by designing and prompting a team of AI agents through natural language.<br />
+                    Skills: AgenticAI, CrewAI, AI Agents, AI framework, Artificial Intelligence, AI in software development, RAG, Task Automation, GenAI Application, multi-AI agent systems.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Certification Introduction to AI and Machine Learning on Google Cloud Certification</h4>
+                  <p className="text-sm text-gray-600">Google</p>
+                  <p className="text-sm text-gray-700">Nov 2024 - Dic 2024 | Voto: 98/100</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">AI and Machine Learning on Google Cloud</span><br />
+                    Introduction to AI and Machine Learning on Google Cloud.<br />
+                    Skills: Vertex AI, Google Cloud, Big Query.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Certification Advanced Data Analytics by Google</h4>
+                  <p className="text-sm text-gray-600">Google</p>
+                  <p className="text-sm text-gray-700">Apr 2024 - Ott 2024 | Voto: 95/100</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Advanced Data Analytics by Google</span><br />
+                    Skills: Data Science, Machine learning, Linear regression, Bayesian ML, Python, Scikitlearn, Inferential statistics, Descriptive Statistics, Data analysis.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Course & Training on the job IT technician in highly automated environments CIM systems oriented, IT</h4>
+                  <p className="text-sm text-gray-600">Higher Education Institute - Bolzano</p>
+                  <p className="text-sm text-gray-700">1995 (1 Anno)</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">IT technician in highly automated environments CIM systems oriented</span><br />
+                    Skills: Hardware & Software Support, Information Management, Network administration, Microsoft Windows Server, Developing.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Course & Training on the job Production & Informatics IT Technician</h4>
+                  <p className="text-sm text-gray-600">IFAP-IRI - Naples</p>
+                  <p className="text-sm text-gray-700">1992 (1 Anno)</p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">IT training in the corporate environment</span><br />
+                    Skills: IT operations, Networks, IT Services, Information Science, Data analytics.
+                  </p>
+                </div>
+                
+                <div className="mb-3">
+                  <h4 className="font-medium">Scientific High School diploma</h4>
+                  <p className="text-sm text-gray-600">Liceo Scientifico S. -- "V.Cuoco" - Napoli</p>
+                  <p className="text-sm text-gray-700">1989 (5 Anni)</p>
+                  <p className="text-sm text-gray-700">
+                    Skills: Mathematics, Statistical Data Analysis, Analytical skills, Thought leadership, Collaborative problem solving.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Languages */}
+          <div className="mb-6">
+            <CollapsibleHeader title="Conoscenze Linguistiche" section="language" />
+            {expandedSections.language && (
+              <div className="pl-6">
+                <ul className="list-disc pl-5 text-gray-700">
+                  <li>Inglese - Livello intermedio</li>
+                  <li>Francese - Livello intermedio</li>
+                </ul>
+              </div>
+            )}
+          </div>
+          
+          {/* Footer */}
+          <div className="mt-8 pt-4 border-t text-center">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Contatti</h3>
+            <div className="flex justify-center items-center gap-4">
+              <a 
+                href="https://www.linkedin.com/in/massimiliano-farucci-72b97651/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center text-gray-700"
+              >
+                <i className="fab fa-linkedin mr-1"></i> Profilo LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Rendering del componente React nella pagina
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Resume />);
+  </script>
 </body>
 </html>
