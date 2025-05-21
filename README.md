@@ -1,1 +1,1 @@
-https://https://mfarucci.github.io/
+https://mfarucci.github.io/
